@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "853090371775",
+    "firebase_url": "https://word-tracker-dbf6a.firebaseio.com",
+    "project_id": "word-tracker-dbf6a",
+    "storage_bucket": "word-tracker-dbf6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853090371775:android:71e1631d4f4d45c0fede0a",
+        "android_client_info": {
+          "package_name": "me.ashitagupta.word_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853090371775-qt9iljmdqs125qq6jic2hp8himre64ca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.ashitagupta.word_tracker",
+            "certificate_hash": "915ac4c5c58677ddacd62347ade9b0f3f2e27c92"
+          }
+        },
+        {
+          "client_id": "853090371775-b7ndjo8o6l1jnnqu8f4s36hm8t2o9tkt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ73uDgcizLVqn0Tp1tfJu2w5McduDGdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853090371775-b7ndjo8o6l1jnnqu8f4s36hm8t2o9tkt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
