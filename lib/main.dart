@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:word_tracker/screens/homePage.dart';
 import 'package:word_tracker/screens/loading_screen.dart';
 import 'package:word_tracker/screens/login_page.dart';
+import 'package:word_tracker/screens/profile_page.dart';
 import 'package:word_tracker/util/constants.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoadingScreen(),
         LoginPage.id: (context) => LoginPage(),
         HomePage.id: (context) => HomePage(),
+        ProfilePage.id: (context) => ProfilePage(),
       },
     );
   }

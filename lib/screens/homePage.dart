@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:word_tracker/models/close_app.dart';
+import 'package:word_tracker/models/custom_button.dart';
+import 'package:word_tracker/screens/profile_page.dart';
 import 'package:word_tracker/util/constants.dart';
 
 bool offline = true;
@@ -30,6 +32,8 @@ class _HomePageState extends State<HomePage> {
   void getUserDetails() async {
     final FirebaseUser user = await _auth.currentUser();
     name = user.displayName;
+    email = user.email;
+    imageUrl = user.photoUrl;
   }
 
   @override
@@ -43,7 +47,13 @@ class _HomePageState extends State<HomePage> {
             Icons.account_circle,
             size: 40.0,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(ProfilePage.id, arguments: {
+              "name": name,
+              "email": email,
+              "photoUrl": imageUrl
+            });
+          },
         ),
         actions: [
           CloseApp(),
@@ -110,43 +120,6 @@ class StartButton extends StatelessWidget {
   }
 }
 
-class CustomButton extends StatelessWidget {
-  final String content;
-  final bool selected;
-  final Function onPressedCallBack;
-  CustomButton({this.content, this.selected, this.onPressedCallBack});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height / 16,
-        width: MediaQuery.of(context).size.width / 2,
-        margin: EdgeInsets.symmetric(vertical: 10.0),
-        child: RaisedButton(
-          onPressed: onPressedCallBack,
-          shape: BeveledRectangleBorder(
-              side: BorderSide(
-                  color: selected ? kButtonColor : kShadowColor, width: 5.0),
-              borderRadius: BorderRadius.all(Radius.circular(15.0))),
-          elevation: 10.0,
-          color: selected ? kShadowColor : kButtonColor,
-          highlightColor: kButtonColor,
-          focusColor: kButtonColor,
-          splashColor: kButtonColor,
-          focusElevation: 0.0,
-          highlightElevation: 0.0,
-          child: Text(content),
-        ));
-  }
-}
-
-//RaisedButton(
-//onPressed: () async {
-//signOutGoogle();
-//Navigator.of(context).pushReplacementNamed(LoginPage.id);
-//},
-//child: Text("Hello $name"),
-//),
 class LoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
