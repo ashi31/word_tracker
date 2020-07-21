@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,13 +21,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
     checkLoginStatus();
   }
 
-  void checkLoginStatus() async {
-    final FirebaseUser user = await _auth.currentUser();
-    if (user == null) {
-      Navigator.of(context).pushReplacementNamed(LoginPage.id);
-    } else {
-      Navigator.of(context).pushReplacementNamed(HomePage.id);
-    }
+  void checkLoginStatus() {
+    _auth.currentUser().then((currentUser) {
+      if (currentUser == null) {
+        Timer(Duration(seconds: 2),
+            () => Navigator.of(context).pushReplacementNamed(LoginPage.id));
+      } else {
+        Timer(Duration(seconds: 2),
+            () => Navigator.of(context).pushReplacementNamed(HomePage.id));
+      }
+    });
   }
 
   @override
