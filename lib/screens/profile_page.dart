@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:word_tracker/screens/login_page.dart';
+import 'package:word_tracker/screens/offline_games.dart';
 import 'package:word_tracker/util/sign_in.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -7,88 +9,86 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as Map;
-
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: PreferredSize(
-          child: SafeArea(
-            child: Stack(children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: NetworkImage(args["photoUrl"]),
-                  ),
-                  Text(
-                    args["name"],
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w100),
-                  ),
-                  Text(
-                    args["email"],
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w100),
-                  ),
-                  Text(
-                    "total games played : 20",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w100),
-                  ),
-                  Expanded(
-                    child: TabBar(
-                      labelColor: Colors.pink,
-                      tabs: [
-                        new Text(
-                          "Offline",
+    int totalOnlineGames, totalOfflineGames;
+    return StreamBuilder<DocumentSnapshot>(
+        stream: Firestore.instance
+            .collection("user_details")
+            .document("${args["email"].toString().split("@")[0]}")
+            .snapshots(),
+        builder: (context, snapshot) {
+          totalOnlineGames = snapshot.data["total_games"]["online_games"];
+          totalOfflineGames = snapshot.data["total_games"]["offline_games"];
+//          print(snapshot.data["offline_games"].runtimeType);
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: PreferredSize(
+                child: SafeArea(
+                  child: Stack(children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 50.0,
+                          backgroundImage: NetworkImage(args["photoUrl"]),
                         ),
-                        new Text(
-                          "Online",
-                        )
+                        Text(
+                          args["name"],
+                          style: TextStyle(
+                              fontSize: 30.0, fontWeight: FontWeight.w100),
+                        ),
+                        Text(
+                          args["email"],
+                          style: TextStyle(
+                              fontSize: 30.0, fontWeight: FontWeight.w100),
+                        ),
+                        Text(
+                          "total games played : ${totalOnlineGames + totalOfflineGames}",
+                          style: TextStyle(
+                              fontSize: 30.0, fontWeight: FontWeight.w100),
+                        ),
+                        Expanded(
+                          child: TabBar(
+                            labelColor: Colors.pink,
+                            tabs: [
+                              new Text(
+                                "Offline Games ($totalOfflineGames)",
+                              ),
+                              new Text(
+                                "Online Games ($totalOnlineGames)",
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                    Positioned(
+                      child: IconButton(
+                        icon: Icon(Icons.exit_to_app),
+                        onPressed: () async {
+                          signOutGoogle();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              LoginPage.id, (route) => false);
+                        },
+                      ),
+                      right: 0.0,
+                    ),
+                  ]),
+                ),
+                preferredSize: Size.fromHeight(250.0),
+              ),
+              body: TabBarView(
+                children: <Widget>[
+                  OfflineGames(
+                      offlineGamesList: snapshot.data["offline_games"]),
+                  Column(
+                    children: <Widget>[Text("Cart Page")],
+                  )
                 ],
               ),
-              Positioned(
-                child: IconButton(
-                  icon: Icon(Icons.exit_to_app),
-                  onPressed: () async {
-                    signOutGoogle();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        LoginPage.id, (route) => false);
-                  },
-                ),
-                right: 0.0,
-              ),
-            ]),
-          ),
-          preferredSize: Size.fromHeight(250.0),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            Container(
-              color: Colors.pink[100],
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                itemBuilder: (_, index) => Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-//                    child: Text("hello"),
-                  ),
-                  color: Colors.pink,
-                ),
-                itemCount: 3,
-              ),
             ),
-            Column(
-              children: <Widget>[Text("Cart Page")],
-            )
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
