@@ -44,9 +44,7 @@ class OfflineGames extends StatelessWidget {
                     Text("player2 : ${offlineGamesList[index]["player2"]}"),
                   ],
                 ),
-                onTap: () {
-
-                },
+                onTap: () {},
               ),
             ),
           ),
