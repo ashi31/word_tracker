@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:word_tracker/models/close_app.dart';
-import 'package:word_tracker/models/custom_button.dart';
 import 'package:word_tracker/screens/profile_page.dart';
 import 'package:word_tracker/util/constants.dart';
+import 'package:word_tracker/widgets/close_app.dart';
+import 'package:word_tracker/widgets/custom_button.dart';
 
 bool offline = true;
 bool online = false;
@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: kButtonColor,
       body: Container(
-        width: MediaQuery.of(context).size.width,
+        width: width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -77,6 +78,33 @@ class _HomePageState extends State<HomePage> {
                       online = false;
                       setState(() {});
                     }),
+                (offline == true)
+                    ? SizedBox(
+                        width: width / 2.3,
+                        child: Column(
+                          children: [
+                            CustomTextField(
+                              hintText: "Player  1 Name",
+                              onChangedCallback: (String value) {
+                                print(value);
+                              },
+                            ),
+                            CustomTextField(
+                              hintText: "Player  2 Name",
+                              onChangedCallback: (String value) {
+                                print(value);
+                              },
+                            ),
+                            CustomTextField(
+                              hintText: "Alphabet",
+                              onChangedCallback: (String value) {
+                                print(value);
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 CustomButton(
                   content: "Online",
                   selected: online,
@@ -92,6 +120,46 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final String hintText;
+  final Function onChangedCallback;
+  CustomTextField({this.hintText, this.onChangedCallback});
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width / 3.0;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+          width: width,
+          child: TextField(
+            textAlign: TextAlign.center,
+            decoration: InputDecoration.collapsed(
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: kShadowColor,
+              ),
+            ),
+            style: TextStyle(color: Colors.white),
+            onChanged: onChangedCallback,
+          ),
+          decoration: ShapeDecoration(
+            shape: BeveledRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                side: BorderSide(color: kShadowColor)),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          margin: EdgeInsets.symmetric(vertical: 5.0),
+        ),
+        Icon(
+          Icons.close,
+          color: Colors.red,
+        ),
+      ],
     );
   }
 }
@@ -115,7 +183,10 @@ class StartButton extends StatelessWidget {
           splashColor: kButtonColor,
           focusElevation: 0.0,
           highlightElevation: 0.0,
-          child: Text("Start"),
+          child: Text(
+            "Start",
+            style: TextStyle(color: Colors.white),
+          ),
         ));
   }
 }

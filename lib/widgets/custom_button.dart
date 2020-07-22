@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressedCallBack,
           shape: BeveledRectangleBorder(
               side: BorderSide(
-                  color: selected ? kButtonColor : kShadowColor, width: 5.0),
+                  color: selected ? kButtonColor : kShadowColor, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(15.0))),
           elevation: 10.0,
           color: selected ? kShadowColor : kButtonColor,
@@ -26,7 +26,10 @@ class CustomButton extends StatelessWidget {
           splashColor: kButtonColor,
           focusElevation: 0.0,
           highlightElevation: 0.0,
-          child: Text(content),
+          child: Text(
+            content,
+            style: TextStyle(color: Colors.white),
+          ),
         ));
   }
 }
