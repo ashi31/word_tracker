@@ -16,6 +16,9 @@ class ProfilePage extends StatelessWidget {
             .document("${args["email"].toString().split("@")[0]}")
             .snapshots(),
         builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return LinearProgressIndicator();
+          }
           totalOnlineGames = snapshot.data["total_games"]["online_games"];
           totalOfflineGames = snapshot.data["total_games"]["offline_games"];
 //          print(snapshot.data["offline_games"].runtimeType);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_tracker/screens/game_details.dart';
 
 class OfflineGames extends StatelessWidget {
   final List offlineGamesList;
@@ -44,7 +45,12 @@ class OfflineGames extends StatelessWidget {
                     Text("player2 : ${offlineGamesList[index]["player2"]}"),
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(GameDetails.id, arguments: {
+                    "game_details": offlineGamesList[index],
+                    "mode": "offline"
+                  });
+                },
               ),
             ),
           ),
