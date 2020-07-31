@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:word_tracker/screens/game_details.dart';
+import 'package:word_tracker/screens/game_screen.dart';
 import 'package:word_tracker/screens/homePage.dart';
 import 'package:word_tracker/screens/loading_screen.dart';
 import 'package:word_tracker/screens/login_page.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => HomePage(),
         ProfilePage.id: (context) => ProfilePage(),
         GameDetails.id: (context) => GameDetails(),
+        GameScreen.id: (context) => GameScreen(),
       },
     );
   }

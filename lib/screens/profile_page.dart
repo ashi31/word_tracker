@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:word_tracker/screens/login_page.dart';
-import 'package:word_tracker/screens/offline_games.dart';
 import 'package:word_tracker/util/sign_in.dart';
+import 'package:word_tracker/widgets/offline_games.dart';
 
 class ProfilePage extends StatelessWidget {
   static const String id = "profile_page";
